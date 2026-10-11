@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/rand"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/Adega318/urlittle/internal/config"
@@ -96,33 +97,25 @@ func (s *Store) Get(ctx context.Context, key string) (string, error) {
 			if errors.Is(err, pgx.ErrNoRows) {
 				return "", ErrNotFound
 			}
-
 			return "", err
 		}
 
 		s.cache.Add(key, value)
 	}
 
+	if time.Now().After(value.ExpiresAt) {
+		return "", ErrNotFound
+	}
 	return value.URL, nil
 }
 
 func (s *Store) ClearExpired(ctx context.Context) error {
-	rows, err := s.db.Query(ctx, `
+	_, err := s.db.Exec(ctx, `
 		DELETE FROM urls
 		WHERE expires_at <= NOW()
-		RETURNING id
 	`)
 	if err != nil {
-		return err
-	}
-
-	ids, err := pgx.CollectRows(rows, pgx.RowTo[string])
-	if err != nil {
-		return err
-	}
-
-	for _, id := range ids {
-		s.cache.Remove(id)
+		return fmt.Errorf("expired cleanup failure: %w", err)
 	}
 
 	return nil
