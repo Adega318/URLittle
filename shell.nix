@@ -14,6 +14,7 @@ pkgs.mkShell {
   shellHook = ''
     # App 
     export LOG_LEVEL=INFO
+    export BASE_URL="http://localhost"
     export PORT=8080
     # Store
     export TTL_MINUTES=5

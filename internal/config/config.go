@@ -10,6 +10,7 @@ import (
 
 type Config struct {
 	LogLevel     slog.Level
+	BaseUrl      string
 	Port         string
 	Store        StoreConfig
 	RateLimiting RateLimitingConfig
@@ -37,6 +38,11 @@ func LoadConfig() (Config, error) {
 		return Config{}, errors.New("LOG_LEVEL mut be: DEBUG | INFO | WARN | ERROR")
 	}
 
+	baseUrl := os.Getenv("BASE_URL")
+	if baseUrl == "" {
+		return Config{}, errors.New("no value found for BASE_URL environment variable")
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		return Config{}, errors.New("no value found for PORT environment variable")
@@ -53,6 +59,7 @@ func LoadConfig() (Config, error) {
 
 	return Config{
 		LogLevel:     logLevel,
+		BaseUrl:      baseUrl,
 		Port:         port,
 		Store:        storeConfig,
 		RateLimiting: rateLimitingConfig,

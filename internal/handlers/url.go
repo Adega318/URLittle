@@ -11,7 +11,6 @@ import (
 )
 
 const maxBodySize = 8 << 10
-const baseUrl = "http://localhost"
 
 func (s *server) store(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, maxBodySize)
@@ -40,7 +39,7 @@ func (s *server) store(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	url := baseUrl + s.addr + "/" + id
+	url := s.addr + "/" + id
 
 	w.Header().Set("Location", url)
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")

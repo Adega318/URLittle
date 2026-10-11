@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -45,10 +46,14 @@ func main() {
 		slog.Error("handler middleware initialitation error", "err", err)
 		os.Exit(1)
 	}
+	publicURL := config.BaseUrl
+	if !strings.HasSuffix(config.BaseUrl, ":80") && !strings.HasSuffix(config.BaseUrl, ":443") {
+		publicURL += addr
+	}
 
 	srv := &http.Server{
 		Addr:              addr,
-		Handler:           limiter.Middleware(handlers.NewHandler(addr, st)),
+		Handler:           limiter.Middleware(handlers.NewHandler(publicURL, st)),
 		ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
