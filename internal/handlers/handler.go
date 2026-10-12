@@ -7,12 +7,13 @@ import (
 )
 
 type server struct {
+	host string
 	addr string
 	st   *store.Store
 }
 
-func NewHandler(addr string, st *store.Store) http.Handler {
-	s := server{addr, st}
+func NewHandler(host string, addr string, st *store.Store) http.Handler {
+	s := server{host, addr, st}
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /{$}", s.store)

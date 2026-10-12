@@ -39,7 +39,7 @@ func (s *server) store(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	url := s.addr + "/" + id
+	url := "http://" + s.host + s.addr + "/" + id
 
 	w.Header().Set("Location", url)
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")

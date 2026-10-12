@@ -71,7 +71,7 @@ All configuration is via environment variables:
 | Variable                    | Required | Description                                 |
 | --------------------------- | -------- | ------------------------------------------- |
 | `LOG_LEVEL`                 | Yes      | Log level: `DEBUG`, `INFO`, `WARN`, `ERROR` |
-| `BASE_URL`                  | Yes      | HTTP server host (e.g., `http://localhost`) |
+| `HOST`                      | Yes      | HTTP server host (e.g., `localhost`)        |
 | `PORT`                      | Yes      | HTTP server port (e.g., `8080`)             |
 | `TTL_MINUTES`               | Yes      | Time to live in minutes                     |
 | `DATABASE_URL`              | Yes      | PostgreSQL connection string                |
@@ -84,7 +84,7 @@ Example `.env`:
 
 ```
 LOG_LEVEL=INFO
-BASE_URL="http://localhost"
+HOST="localhost"
 PORT=8080
 DATABASE_URL=postgres://user:pass@localhost:5432/urlittle
 CACHE_SIZE=1000
@@ -120,7 +120,7 @@ The service will be available at `http://localhost:8080`.
 
 # Set environment variables
 export LOG_LEVEL=INFO
-export BASE_URL="http://localhost"
+export HOST="localhost"
 export PORT=8080
 export TTL_MINUTES=5
 export DATABASE_URL=postgres://user:pass@localhost:5432/urlittle
@@ -162,20 +162,20 @@ golangci-lint run
 
 ### Environment variables for docker-compose
 
-| Variable                    | Description                                 |
-| --------------------------- | ------------------------------------------- |
-| `POSTGRES_DB`               | Database name                               |
-| `POSTGRES_USER`             | Database user                               |
-| `POSTGRES_PASSWORD`         | Database password                           |
-| `LOG_LEVEL`                 | Log level (default: INFO)                   |
-| `BASE_URL`                  | HTTP server host (e.g., `http://localhost`) |
-| `PORT`                      | Host port mapping (default: 8080)           |
-| `TTL_MINUTES`               | Time to live in minutes (default: 5)        |
-| `CACHE_SIZE`                | LRU cache size (default: 1000)              |
-| `RATE_LIMIT_USER_LIST_SIZE` | Max tracked IPs (default: 10000)            |
-| `RATE_LIMIT_LIMIT`          | Requests/sec per client (default: 10)       |
-| `RATE_LIMIT_BURST`          | Burst allowance (default: 20)               |
-| `VERSION`                   | Build version tag (default: dev)            |
+| Variable                    | Description                           |
+| --------------------------- | ------------------------------------- |
+| `POSTGRES_DB`               | Database name                         |
+| `POSTGRES_USER`             | Database user                         |
+| `POSTGRES_PASSWORD`         | Database password                     |
+| `LOG_LEVEL`                 | Log level (default: INFO)             |
+| `HOST`                      | HTTP server host (e.g., `localhost`)  |
+| `PORT`                      | Host port mapping (default: 8080)     |
+| `TTL_MINUTES`               | Time to live in minutes (default: 5)  |
+| `CACHE_SIZE`                | LRU cache size (default: 1000)        |
+| `RATE_LIMIT_USER_LIST_SIZE` | Max tracked IPs (default: 10000)      |
+| `RATE_LIMIT_LIMIT`          | Requests/sec per client (default: 10) |
+| `RATE_LIMIT_BURST`          | Burst allowance (default: 20)         |
+| `VERSION`                   | Build version tag (default: dev)      |
 
 ## Security
 

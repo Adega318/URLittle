@@ -43,7 +43,7 @@
           shellHook = ''
             # App 
             export LOG_LEVEL=INFO
-            export BASE_URL="http://localhost"
+            export HOST="localhost"
             export PORT=8080
             # Store
             export TTL_MINUTES=5
@@ -70,10 +70,10 @@
             options = {
               services.urlittle = {
                 enable = lib.mkEnableOption "urlittle URL shortener service";
-                baseUrl = lib.mkOption {
+                host = lib.mkOption {
                   type = lib.types.str;
-                  default = "http://localhost";
-                  description = "Service connection URL";
+                  default = "localhost";
+                  description = "Service connection host";
                 };
                 port = lib.mkOption {
                   type = lib.types.portNumber;
@@ -143,7 +143,7 @@
                   ExecStart = "${urlittlePackage}/bin/urlittle";
                   Restart = "on-failure";
                   Environment = [
-                    "BASE_URL=${toString config.services.urlittle.baseUrl}"
+                    "HOST=${toString config.services.urlittle.host}"
                     "PORT=${toString config.services.urlittle.port}"
                     "TTL_MINUTES=${toString config.services.urlittle.ttl}"
                     "DATABASE_URL=${config.services.urlittle.databaseUrl}"
